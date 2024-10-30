@@ -1,0 +1,10 @@
+{
+  "shop": {
+    "title": "VRUSHABH's Shop",
+    "description": "Explore our categories and items.",
+    "links": [
+      { "label": "Categories", "url": "/categories.json" },
+      { "label": "Items", "url": "/items.json" }
+    ]
+  }
+}

@@ -72,10 +72,70 @@ function getCategories() {
   });
 }
 
+// Function: addItem()
+// Adds a new item to the "items" array, setting defaults as needed, and returns a promise
+function addItem(itemData) {
+  return new Promise((resolve, reject) => {
+    // Set default published status if undefined
+    itemData.published = itemData.published ? true : false;
+    
+    // Assign a unique ID based on the current length of the "items" array
+    itemData.id = items.length + 1;
+    
+    // Push the item to the "items" array and resolve with the item data
+    items.push(itemData);
+    resolve(itemData);
+  });
+}
+
+// Function: getItemsByCategory()
+// Filters items based on a given category and returns a promise
+function getItemsByCategory(category) {
+  return new Promise((resolve, reject) => {
+    const filteredItems = items.filter(item => item.category == category);
+    if (filteredItems.length > 0) {
+      resolve(filteredItems);
+    } else {
+      reject("No results returned");
+    }
+  });
+}
+
+// Function: getItemsByMinDate()
+// Filters items whose postDate is greater than or equal to minDateStr and returns a promise
+function getItemsByMinDate(minDateStr) {
+  return new Promise((resolve, reject) => {
+    const minDate = new Date(minDateStr);
+    const filteredItems = items.filter(item => new Date(item.postDate) >= minDate);
+    if (filteredItems.length > 0) {
+      resolve(filteredItems);
+    } else {
+      reject("No results returned");
+    }
+  });
+}
+
+// Function: getItemById()
+// Finds an item by its ID and returns a promise
+function getItemById(id) {
+  return new Promise((resolve, reject) => {
+    const item = items.find(item => item.id == id);
+    if (item) {
+      resolve(item);
+    } else {
+      reject("No result returned");
+    }
+  });
+}
+
 // Export all the functions to be used in other files like server.js
 module.exports = {
   initialize,
   getAllItems,
   getPublishedItems,
-  getCategories
+  getCategories,
+  addItem,           // Exported new addItem function
+  getItemsByCategory, // Exported new getItemsByCategory function
+  getItemsByMinDate,  // Exported new getItemsByMinDate function
+  getItemById         // Exported new getItemById function
 };
